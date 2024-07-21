@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgressvc
+  template:
+    metadata:
+      labels:
+        app: postgressvc
+    spec:
+      containers:
+      - name: postgres
+        image: cloudservos2607/postgres:latest
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_USER
+          value: myuser
+        - name: POSTGRES_PASSWORD
+          value: mypassword
+        - name: POSTGRES_DB
+          value: myapp
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgressvc
+spec:
+  selector:
+    app: postgressvc
+  ports:
+  - protocol: TCP
+    port: 5432
+    targetPort: 5432
+  type: ClusterIP
+

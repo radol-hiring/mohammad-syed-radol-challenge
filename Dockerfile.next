@@ -1,0 +1,25 @@
+# Use the official Node.js image as the base image
+FROM node:18
+
+# Set the working directory inside the container
+WORKDIR /usr/src/app
+
+# Copy package.json and package-lock.json for dependencies
+COPY nextjs-frontend/package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the application code
+COPY nextjs-frontend/ .
+
+# Build the Next.js application
+#RUN npm run dev
+
+# Expose the port on which the app will run
+EXPOSE 3001
+
+# Start the Next.js application
+#CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "dev", "--", "--port", "3001"]
+

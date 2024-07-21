@@ -1,0 +1,164 @@
+sudo apt update
+
+sudo apt install postgresql postgresql-contrib
+
+sudo -i -u postgres
+
+psql
+
+CREATE DATABASE myapp;
+
+CREATE USER myuser WITH PASSWORD 'mypassword';
+
+GRANT ALL PRIVILEGES ON DATABASE myapp TO myuser;
+
+\c myapp;
+ALTER TABLE messages OWNER TO myuser;
+
+CREATE TABLE messages (id SERIAL PRIMARY KEY, content VARCHAR(255));
+INSERT INTO messages (content) VALUES ('Hello World from postgres');
+
+\q
+
+exit
+
+psql -h localhost -U myuser -d myapp
+
+
+
+sudo systemctl start postgresql
+sudo systemctl enable postgresql
+
+====================================
+
+sudo apt install postgresql-client
+
+psql -h localhost -U myuser -d myapp
+
+\dt
+SELECT * FROM messages;
+
+error
+permission issue
+
+sudo systemctl restart postgresql
+
+sudo -i -u postgres
+psql
+
+-- Switch to the 'myapp' database
+\c myapp;
+
+-- Grant all privileges on the 'messages' table to 'myuser'
+GRANT ALL PRIVILEGES ON TABLE messages TO myuser;
+
+
+\dp messages;
+
+\q
+
+\dp messages;
+
+
+===========================================
+
+npm install -g @nestjs/cli
+
+nest new nest-postgres-backend
+
+cd nest-postgres-backend
+
+npm install @nestjs/typeorm typeorm pg
+
+nest-postgres-backend/
+├── src/
+│   ├── app.module.ts          // Main module where TypeORM is configured
+│   ├── main.ts                // Entry point of the application
+│   ├── messages/              // Module for messages
+│   │   ├── messages.controller.ts   // Controller handling HTTP requests
+│   │   ├── messages.module.ts       // Module file for messages
+│   │   ├── messages.service.ts      // Service file for messages
+│   │   └── message.entity.ts        // Entity definition for messages
+│   └── ormconfig.json         // TypeORM configuration file
+├── package.json               // Dependencies and scripts
+└── tsconfig.json              // TypeScript configuration
+
+cd nest-postgres-backend/src
+
+nest generate module messages
+
+nest generate service messages
+
+nest generate controller messages
+
+
+src/
+├── app.controller.spec.ts
+├── app.controller.ts
+├── app.module.ts
+├── app.service.ts
+├── main.ts
+└── messages
+    ├── messages.controller.spec.ts
+    ├── messages.controller.ts
+    ├── messages.module.ts
+    ├── messages.service.spec.ts
+    └── messages.service.ts
+
+after changes
+
+nest-postgres-backend/
+├── src/
+│   ├── app.controller.spec.ts
+│   ├── app.controller.ts
+│   ├── app.module.ts
+│   ├── app.service.ts
+│   ├── main.ts
+│   └── messages/
+│       ├── message.entity.ts
+│       ├── messages.controller.spec.ts
+│       ├── messages.controller.ts
+│       ├── messages.module.ts
+│       ├── messages.service.spec.ts
+│       └── messages.service.ts
+├── ormconfig.json
+├── package.json
+└── tsconfig.json
+
+
+
+ALTER TABLE messages OWNER TO myuser;
+
+CREATE TABLE messages (id SERIAL PRIMARY KEY, content VARCHAR(255));
+INSERT INTO messages (content) VALUES ('Hello World from postgres');
+
+
+
+===================
+
+ npm run start:dev
+
+=======================
+
+next js
+
+npx create-next-app@latest my-next-app
+cd my-next-app
+
+npm install axios
+
+----
+
+npx create-next-app@latest nextjs-frontend
+cd nextjs-frontend
+npm install axios
+
+npm run dev
+
+
+
+
+
+
+
+

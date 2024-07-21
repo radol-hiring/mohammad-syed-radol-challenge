@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextjs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nextjssvc
+  template:
+    metadata:
+      labels:
+        app: nextjssvc
+    spec:
+      containers:
+      - name: nextjs
+        image: cloudservos2607/next-frontend:v1
+        ports:
+        - containerPort: 3001
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nextjssvc
+spec:
+  selector:
+    app: nextjssvc
+  ports:
+  - protocol: TCP
+    port: 3001
+    targetPort: 3001
+  type: LoadBalancer
+
